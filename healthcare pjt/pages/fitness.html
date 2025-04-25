@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            background: url('../assets/images/fitness-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+        .fitness-box {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 75, 255, 0.8), rgba(0, 107, 255, 0.7));
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .category {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background: linear-gradient(45deg, rgba(0, 255, 127, 1), rgba(0, 200, 100, 0.9));
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .return-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.8), rgba(255, 50, 50, 0.9));
+        }
+    </style>
+</head>
+<body>
+
+    <button class="return-btn" onclick="window.location.href='../index.html'">⬅ Return</button>
+
+    <div class="fitness-box">
+        <h2>🏋️‍♂️ Fitness & Weight Loss 🥗</h2>
+        
+        <div class="category">
+            <h3>Beginner Level</h3>
+            <p>Basic cardio, stretching, and balanced diet.</p>
+            <button onclick="window.location.href='beginner.html'">View Plan</button>
+        </div>
+        
+        <div class="category">
+            <h3>Intermediate Level</h3>
+            <p>Strength training, HIIT workouts, and protein-rich diet.</p>
+            <button onclick="window.location.href='intermediate.html'">View Plan</button>
+        </div>
+        
+        <div class="category">
+            <h3>Advanced Level</h3>
+            <p>Intensive weight training, endurance exercises, and high-protein, low-carb diet.</p>
+            <button onclick="window.location.href='advanced.html'">View Plan</button>
+        </div>
+        
+        <button onclick="startVideoCall()">💬 Connect with a Trainer (Google Meet)</button>
+    </div>
+
+    <script>
+        function startVideoCall() {
+            window.location.href = 'https://meet.google.com/';
+        }
+    </script>
+
+</body>
+</html>

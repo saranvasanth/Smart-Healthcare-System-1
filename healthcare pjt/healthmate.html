@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthMate</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('../assets/images/healthmate-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            background: linear-gradient(135deg, rgba(235, 238, 243, 0.8), rgba(0, 180, 255, 0.7));
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: black;
+            font-weight: bold;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: black;
+        }
+        .feature {
+            text-align: left;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: black;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        input {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+        button {
+            background: linear-gradient(45deg, #001f3f, #003366);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .return-home {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #ff4500;
+        }
+        /* Timer Popup */
+        #timerPopup {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+        /* Symptom Popup */
+        #symptomPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+        }
+        .blood-level {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .low { background: red; }
+        .normal { background: green; }
+        .high { background: orange; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🌡️ Chronic Disease Management</h2>
+
+        <div class="feature">
+            <label>📊 Symptom & Vitals Tracking</label>
+            <input type="text" id="symptomInput" placeholder="Enter today's symptoms">
+            <input type="text" id="bloodInput" placeholder="Blood Pressure / Sugar Level">
+            <button onclick="showSymptomPopup()">Submit</button>
+        </div>
+
+        <div class="feature">
+            <label>💊 Medication Reminders</label>
+            <input type="text" placeholder="Medicine Name">
+            <input type="time" id="medTime" onchange="setReminder()">
+        </div>
+
+        <div class="feature">
+            <label>🗓 Doctor Consultation</label>
+            <button onclick="bookAppointment()">Book an Appointment</button>
+        </div>
+
+        <div class="feature">
+            <label>📈 Health Analytics</label>
+            <input id="reportFile" type="file" accept=".jpg, .png, .pdf">
+            <button onclick="uploadReport()">Upload</button>
+            <button onclick="viewReports()">View Reports</button>
+        </div>
+    </div>
+
+    <button class="return-home" onclick="goHome()">🏠 Return to Home</button>
+
+  
+
+    <!-- Symptom Popup -->
+    <div id="symptomPopup">
+        <p id="symptomMessage"></p>
+        <div id="bloodLevel" class="blood-level"></div>
+        <button onclick="closeSymptomPopup()">OK</button>
+    </div>
+
+    <!-- Timer Popup -->
+<div id="timerPopup">
+    <button class="close-btn" onclick="hideTimerPopup()">✖</button>
+    <p>⏳ Timer: <span id="clock"></span></p>
+</div>
+
+<!-- Audio Alert -->
+<audio id="alertSound">
+    <source src="../assets/sounds/alert.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    let reminderTime = null;
+
+    function setReminder() {
+        const timeInput = document.getElementById("medTime").value;
+        if (timeInput) {
+            reminderTime = timeInput;
+            alert(`Medication reminder set for ${timeInput}`);
+            showTimerPopup();
+        }
+    }
+
+    function showTimerPopup() {
+        document.getElementById("timerPopup").style.display = "block";
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const seconds = now.getSeconds().toString().padStart(2, "0");
+            document.getElementById("clock").innerText = `${hours}:${minutes}:${seconds}`;
+
+            if (reminderTime && `${hours}:${minutes}` === reminderTime) {
+                playAlertSound();
+                alert("⏰ It's time to take your medication!");
+                reminderTime = null;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    }
+
+    function playAlertSound() {
+        const sound = document.getElementById("alertSound");
+        sound.play().catch(error => {
+            console.error("Audio playback failed:", error);
+        });
+    }
+
+    function enableAudio() {
+        const sound = document.getElementById("alertSound");
+        sound.play().then(() => {
+            console.log("Audio enabled");
+        }).catch(error => {
+            console.warn("Audio play blocked:", error);
+        });
+    }
+
+    function hideTimerPopup() {
+        document.getElementById("timerPopup").style.display = "none";
+    }
+
+    document.addEventListener("click", enableAudio, { once: true });
+
+
+        function showSymptomPopup() {
+            const symptom = document.getElementById("symptomInput").value;
+            const bloodLevel = document.getElementById("bloodInput").value;
+            const popup = document.getElementById("symptomPopup");
+            const message = document.getElementById("symptomMessage");
+            const levelBar = document.getElementById("bloodLevel");
+
+            if (symptom.trim() === "" || bloodLevel.trim() === "") {
+                alert("Please enter both symptom and blood level.");
+                return;
+            }
+
+            message.innerText = `You entered: ${symptom}`;
+
+            if (bloodLevel < 80) {
+                levelBar.className = "blood-level low";
+            } else if (bloodLevel >= 80 && bloodLevel <= 120) {
+                levelBar.className = "blood-level normal";
+            } else {
+                levelBar.className = "blood-level high";
+            }
+
+            popup.style.display = "block";
+        }
+
+        function closeSymptomPopup() {
+            document.getElementById("symptomPopup").style.display = "none";
+        }
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        function bookAppointment() {
+    window.location.href = "./pages/appointment.html";
+}
+
+
+
+function uploadReport() {
+    const fileInput = document.getElementById("reportFile");
+    if (fileInput.files.length === 0) {
+        alert("Please select a file to upload.");
+        return;
+    }
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        const reports = JSON.parse(localStorage.getItem("uploadedReports")) || [];
+        reports.push({ 
+            name: file.name, 
+            url: event.target.result, 
+            type: file.type 
+        });
+
+        localStorage.setItem("uploadedReports", JSON.stringify(reports));
+        alert(`📂 ${file.name} uploaded successfully!`);
+    };
+
+    reader.readAsDataURL(file); // Convert file to Base64 URL
+}
+function viewReports() {
+    window.location.href = "./pages/reports.html";
+ // Adjust path if needed
+}
+
+
+    </script>
+</body>
+</html>

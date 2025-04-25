@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner Workout & Diet Plan</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            background: url('../assets/images/beginner.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: rgb(24, 12, 12);
+        }
+        .content-box {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 75, 255, 0.8), rgba(0, 107, 255, 0.7));
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .exercise img, .diet-table img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .diet-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .diet-table th, .diet-table td {
+            border: 1px solid white;
+            padding: 10px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, rgba(37, 172, 51, 0.8), rgba(255, 50, 50, 0.9));
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            text-decoration: none;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="content-box">
+        <h2>🏋️ Beginner Workout & Diet Plan 🥗</h2>
+        
+        <!-- Workout Section -->
+        <div class="section">
+            <a href="https://www.youtube.com/embed/ixkQaZXVQjs?si=aCtBors-pagXvQa3" target="_blank" class="btn">Beginner Workout Routine ▶</a>
+            <p>Click on an exercise image to view it in larger size.</p>
+            <div class="exercise"><img src="../assets/images/jumping-jacks.jpg" alt="Jumping Jacks" onclick="showImage(this.src)"><p>Jumping Jacks - 3 sets of 20 reps</p></div>
+            <div class="exercise"><img src="../assets/images/squats.jpg" alt="Squats" onclick="showImage(this.src)"><p>Squats - 3 sets of 15 reps</p></div>
+            <div class="exercise"><img src="../assets/images/pushups.jpg" alt="Push-ups" onclick="showImage(this.src)"><p>Push-ups - 3 sets of 10 reps</p></div>
+            <div class="exercise"><img src="../assets/images/plank.jpg" alt="Plank" onclick="showImage(this.src)"><p>Plank - Hold for 30 seconds</p></div>
+        </div>
+
+        <!-- Diet Plan Section -->
+        <div class="section">
+            <h3>Beginner Diet Plan</h3>
+             <!-- Diet Plan Section -->
+        <div class="section">
+            <a href="https://www.youtube.com/embed/aADukThvjXQ?si=UC8tfJzUWz1AFXDr" target="_blank" class="btn">Beginner Diet Plan ▶</a>
+        </div>
+            <table class="diet-table">
+                <tr><th>Meal</th><th>Food</th><th>Image</th></tr>
+                <tr><td>Breakfast</td><td>Oatmeal with fruits</td><td><img src="../assets/images/oatmeal.jpg" alt="Oatmeal" onclick="showImage(this.src)"></td></tr>
+                <tr><td>Lunch</td><td>Grilled chicken with brown rice and vegetables</td><td><img src="../assets/images/grilled-chicken.jpg" alt="Grilled Chicken" onclick="showImage(this.src)"></td></tr>
+                <tr><td>Snack</td><td>A handful of almonds & a banana</td><td><img src="../assets/images/almonds-banana.jpg" alt="Almonds & Banana" onclick="showImage(this.src)"></td></tr>
+                <tr><td>Dinner</td><td>Grilled salmon with quinoa and steamed broccoli</td><td><img src="../assets/images/salmon.jpg" alt="Grilled Salmon" onclick="showImage(this.src)"></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal for Enlarged Image -->
+    <div id="imageModal" class="modal" onclick="closeImage()">
+        <span class="close">&times;</span>
+        <img id="modalImage" src="">
+    </div>
+
+    <script>
+        function showImage(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+        function closeImage() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

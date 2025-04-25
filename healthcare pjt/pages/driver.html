@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drivers Nearby</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            width: 300px;
+        }
+        .title-box {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .driver-list { margin-top: 20px; }
+        
+        /* Gradient Button Styling */
+        .gradient-button {
+            background: linear-gradient(45deg, #ff512f, #dd2476);
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            transition: 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .gradient-button:hover {
+            background: linear-gradient(45deg, #dd2476, #ff512f);
+            transform: scale(1.05);
+        }
+        
+        /* Driver Buttons */
+        .driver-button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .driver-button:hover {
+            background: #0056b3;
+        }
+
+        /* Popup Styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+            backdrop-filter: blur(15px);
+            width: 90%;
+            max-width: 350px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+        .popup img { 
+            width: 100px; 
+            height: 100px; 
+            border-radius: 50%; 
+            display: block; 
+            margin: 10px auto; 
+            border: 3px solid white;
+        }
+        .popup button { margin-top: 10px; font-weight: bold; }
+        
+        /* Close Button */
+        .close {
+            background: red;
+            color: white;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title-box">🚗 Drivers Nearby</div>
+        <button class="gradient-button" onclick="showDrivers()">Show Drivers Nearby</button>
+        <div id="driverList" class="driver-list"></div>
+    </div>
+    
+    <div id="popup" class="popup">
+        <button class="close" onclick="closePopup()">X</button>
+        <img id="driverPhoto" src="" alt="Driver Photo">
+        <h3 id="driverName"></h3>
+        <p id="driverAge"></p>
+        <p id="driverReview"></p>
+        <button class="gradient-button" onclick="bookNow()">Book Now</button>
+    </div>
+
+    <script>
+        const drivers = [
+            { name: "Afsal Syed S", age: 30, photo: "../assets/images/driver1.jpg", review: "4.5 stars" },
+            { name: "Jane Smith", age: 28, photo: "../assets/images/driver2.jpg", review: "4.7 stars" },
+            { name: "Mike Johnson", age: 35, photo: "../assets/images/driver3.jpg", review: "4.8 stars" }
+        ];
+
+        function showDrivers() {
+            const list = document.getElementById("driverList");
+            list.innerHTML = "";
+            drivers.forEach((driver, index) => {
+                const button = document.createElement("button");
+                button.textContent = driver.name;
+                button.className = "driver-button";
+                button.onclick = () => showPopup(index);
+                list.appendChild(button);
+            });
+        }
+
+        function showPopup(index) {
+            const driver = drivers[index];
+            document.getElementById("driverPhoto").src = driver.photo;
+            document.getElementById("driverName").textContent = driver.name;
+            document.getElementById("driverAge").textContent = "Age: " + driver.age;
+            document.getElementById("driverReview").textContent = "Review: " + driver.review;
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function bookNow() {
+            window.location.href = "booked.html";
+        }
+    </script>
+</body>
+</html>

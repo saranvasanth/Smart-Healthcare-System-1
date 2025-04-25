@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded Reports</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('../assets/images/healthmate-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background: linear-gradient(135deg, rgba(235, 238, 243, 0.8), rgba(0, 180, 255, 0.7));
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: black;
+            font-weight: bold;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: black;
+        }
+        .report-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            text-align: left;
+        }
+        .report-item a {
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
+        }
+        button {
+            background: #ff4500;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📂 Uploaded Reports</h2>
+        <div id="reportList">
+            <!-- Reports will be displayed here -->
+        </div>
+    </div>
+
+    <button onclick="goBack()">🔙 Go Back</button>
+
+    <script>
+        function loadReports() {
+            const reportList = document.getElementById("reportList");
+            const reports = JSON.parse(localStorage.getItem("uploadedReports")) || [];
+
+            if (reports.length === 0) {
+                reportList.innerHTML = "<p>No reports uploaded yet.</p>";
+                return;
+            }
+
+            reports.forEach((report, index) => {
+                const reportDiv = document.createElement("div");
+                reportDiv.classList.add("report-item");
+
+                let viewButton = "";
+                if (report.type === "application/pdf") {
+                    // Open PDF in new browser tab
+                    viewButton = `<button onclick="viewPDF('${report.url}')">📄 View PDF</button>`;
+                } else if (report.type.startsWith("image/")) {
+                    // Open image in system photo viewer
+                    viewButton = `<button onclick="viewImage('${report.url}')">🖼 View Image</button>`;
+                }
+
+                reportDiv.innerHTML = `
+                    📄 <strong>${report.name || "Report " + (index + 1)}</strong> <br>
+                    ${viewButton} 
+                    <button onclick="deleteReport(${index})">🗑 Delete</button>
+                `;
+
+                reportList.appendChild(reportDiv);
+            });
+        }
+
+        function viewPDF(url) {
+            window.open(url, "_blank"); // Opens PDF in new tab
+        }
+
+        function viewImage(url) {
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "report-image"; // Forces image to open in system viewer
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function deleteReport(index) {
+            let reports = JSON.parse(localStorage.getItem("uploadedReports")) || [];
+            reports.splice(index, 1);
+            localStorage.setItem("uploadedReports", JSON.stringify(reports));
+            location.reload(); // Refresh the page to update the list
+        }
+
+        function goBack() {
+            window.location.href = "../healthmate.html"; // Adjust path if needed
+        }
+
+        // Load reports on page load
+        loadReports();
+    </script>
+</body>
+</html>

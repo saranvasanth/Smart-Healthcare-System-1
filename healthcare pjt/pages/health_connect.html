@@ -1,0 +1,196 @@
+<!-- Health Connect -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Connect</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            background: url('../assets/images/health_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(45deg, rgba(17, 117, 252, 0.9), rgba(37, 203, 252, 0.9));
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        h2 {
+            font-size: 26px;
+            font-weight: bold;
+        }
+        .specialist {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .specialist:hover {
+            transform: scale(1.05);
+        }
+        .specialist img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .specialist-info {
+            flex-grow: 1;
+            text-align: left;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .btn-call {
+            background: linear-gradient(45deg, rgba(0, 200, 0, 0.8), rgba(0, 255, 0, 0.9));
+            color: white;
+        }
+        .btn-video {
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.8), rgba(255, 50, 50, 0.9));
+            color: white;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .return-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .return-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>👨‍⚕️ Connect with a Specialist</h2>
+
+        <div class="specialist">
+            <img src="../assets/images/doctor1.jpg" alt="Dr.Vishnu Priyan">
+            <div class="specialist-info">
+                <p><strong>Dr.Vishnu Priyan S</strong></p>
+                <p>Cardiologist</p>
+            </div>
+            <button class="btn btn-call" onclick="callDoctor('+919342664252')">📞 Call</button>
+            <button class="btn btn-video" onclick="openVideoCall()">📹 Video Call</button>
+        </div>
+
+        <div class="specialist">
+            <img src="../assets/images/doctor2.jpg" alt="Dr.Dharnesh">
+            <div class="specialist-info">
+                <p><strong>Dr.Dharnesh</strong></p>
+                <p>Neurologist</p>
+            </div>
+            <button class="btn btn-call" onclick="callDoctor('+919123456789')">📞 Call</button>
+            <button class="btn btn-video" onclick="openVideoCall()">📹 Video Call</button>
+        </div>
+
+        <div class="chat-box">
+            <h3>💬 Live Chat</h3>
+            <textarea placeholder="Type your message..."></textarea>
+            <button class="btn btn-call">Send</button>
+        </div>
+
+        <div class="upload-box">
+            <h3>📄 Upload Prescription</h3>
+            <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+            <div class="image-preview" id="imagePreview">
+                <img id="previewImg" onclick="openImageModal()" src="">
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Call Modal -->
+    <div class="video-call-box" id="video-call-box">
+        <h3>📹 Video Call</h3>
+        <video id="video" autoplay></video>
+        <button class="btn btn-video" onclick="closeVideoCall()">❌ End Call</button>
+    </div>
+
+    <!-- Image View Modal -->
+    <div id="imageModal" class="modal" onclick="closeImageModal()">
+        <span class="close">&times;</span>
+        <img id="modalImage" src="">
+    </div>
+
+    <!-- Return Button -->
+    <a href="../index.html" class="return-btn">⬅️ Return to Home</a>
+
+    <script>
+        function callDoctor(phoneNumber) {
+            window.location.href = "tel:" + phoneNumber;
+        }
+
+        function openVideoCall() {
+            let videoBox = document.getElementById("video-call-box");
+            videoBox.style.display = "block";
+
+            let video = document.getElementById("video");
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(error => {
+                    alert("Error accessing webcam: " + error);
+                });
+        }
+
+        function closeVideoCall() {
+            let videoBox = document.getElementById("video-call-box");
+            videoBox.style.display = "none";
+
+            let video = document.getElementById("video");
+            let stream = video.srcObject;
+            let tracks = stream.getTracks();
+
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+        }
+
+        function previewImage(event) {
+            let preview = document.getElementById("imagePreview");
+            let img = document.getElementById("previewImg");
+            img.src = URL.createObjectURL(event.target.files[0]);
+            preview.style.display = "block";
+        }
+
+        function openImageModal() {
+            document.getElementById("modalImage").src = document.getElementById("previewImg").src;
+            document.getElementById("imageModal").style.display = "flex";
+        }
+
+        function closeImageModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>

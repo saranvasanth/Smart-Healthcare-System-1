@@ -1,0 +1,208 @@
+<!-- Pharma E-Store -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharma E-Store</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('../assets/images/pharma-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, rgba(0, 0, 50, 0.8), rgba(0, 180, 255, 0.7));
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+        .search-bar {
+            margin: 20px auto;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+        }
+        .search-bar button {
+            background: #003366;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(180, 255, 255, 0.6));
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card img {
+            width: 100px;
+            height: 100px;
+        }
+        .cart {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 50, 0, 0.8), rgba(0, 180, 100, 0.7));
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+        .cart-items {
+            list-style: none;
+            padding: 0;
+        }
+        .cart-items li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .checkout-btn {
+            background: #008000;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        /* Return Home Button */
+        .return-home {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #ff4500;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .return-home:hover {
+            transform: scale(1.05);
+            background: #d63f00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">🛒 Pharma E-Store</div>
+
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for medicines...">
+            <button onclick="searchMedicine()">Search</button>
+        </div>
+
+        <div class="product-grid" id="product-list">
+            <div class="product-card">
+                <img src="../assets/images/medicine1.png" alt="Medicine">
+                <h3>Paracetamol</h3>
+                <p>₹50</p>
+                <button onclick="addToCart('Paracetamol', 50)">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="../assets/images/medicine2.png" alt="Medicine">
+                <h3>Cough Syrup</h3>
+                <p>₹120</p>
+                <button onclick="addToCart('Cough Syrup', 120)">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="../assets/images/medicine3.png" alt="Medicine">
+                <h3>Vitamin C Tablets</h3>
+                <p>₹200</p>
+                <button onclick="addToCart('Vitamin C Tablets', 200)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="cart">
+            <h2>🛍 Your Cart</h2>
+            <ul class="cart-items" id="cart-items"></ul>
+            <p><strong>Total:</strong> ₹<span id="total-price">0</span></p>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Return to Home Button -->
+    <button class="return-home" onclick="goHome()">🏠 Return to Home</button>
+
+    <script>
+        let cart = [];
+        
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartList = document.getElementById("cart-items");
+            let totalPrice = document.getElementById("total-price");
+            cartList.innerHTML = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                let li = document.createElement("li");
+                li.innerHTML = `${item.name} - ₹${item.price} <button onclick="removeFromCart(${index})">❌</button>`;
+                cartList.appendChild(li);
+            });
+
+            totalPrice.textContent = total;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            localStorage.setItem("cartTotal", document.getElementById("total-price").textContent);
+            window.location.href = "address.html"; // Redirects to address.html
+        }
+
+        function goHome() {
+            window.location.href = "../index.html"; // Redirect to index.html (outside the folder)
+        }
+    </script>
+
+</body>
+</html>

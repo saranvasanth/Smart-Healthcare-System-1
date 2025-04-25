@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('../assets/images/payment.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+        }
+        .payment-container {
+            width: 90%;
+            max-width: 400px;
+            margin: 50px auto;
+            background: linear-gradient(135deg, rgba(235, 238, 243, 0.8), rgba(0, 180, 255, 0.7));
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: black;
+            font-weight: bold;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: black;
+        }
+        .payment-option {
+            text-align: left;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: black;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        input {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+        button {
+            background: linear-gradient(45deg, #001f3f, #003366);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>💳 Secure Payment</h2>
+
+        <div class="payment-option">
+            <input type="radio" name="payment" id="upi" checked> <label for="upi">UPI Payment</label>
+            <input type="text" id="upi-id" placeholder="Enter UPI ID">
+        </div>
+        
+        <div class="payment-option">
+            <input type="radio" name="payment" id="card"> <label for="card">Credit/Debit Card</label>
+            <input type="text" id="card-number" placeholder="Card Number">
+            <input type="text" id="expiry" placeholder="MM/YY">
+            <input type="text" id="cvv" placeholder="CVV">
+        </div>
+        
+        <div class="payment-option">
+            <input type="radio" name="payment" id="cod"> <label for="cod">Cash on Delivery</label>
+        </div>
+
+        <button onclick="processPayment()">Proceed to Pay</button>
+    </div>
+
+    <script>
+        function processPayment() {
+            alert("Payment Successful! Redirecting...");
+            window.location.href = "success.html"; // Redirect instantly
+        }
+    </script>
+</body>
+</html>

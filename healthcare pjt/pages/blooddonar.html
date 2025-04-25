@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donors</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            background: url('../assets/images/blood_donor.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            font-weight: bold;
+        }
+        .header-box, .donor-list {
+            width: 50%;
+            margin: 20px auto;
+            padding: 15px;
+            background: linear-gradient(45deg, rgba(0, 75, 255, 0.9), rgba(0, 107, 255, 0.8));
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            color: white;
+        }
+        .header-box {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .donor {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .donor:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .donor img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .donor span {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .details-box {
+            display: none;
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 75, 255, 0.8), rgba(0, 107, 255, 0.7));
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            color: white;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+        .call-button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            background: linear-gradient(45deg, rgba(0, 75, 255, 1), rgba(0, 107, 255, 0.9));
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            text-align: center;
+            text-decoration: none;
+        }
+        .call-button:hover {
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            text-align: center;
+        }
+        .modal img {
+            margin-top: 10%;
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-box">🩸 <strong>Blood Donors</strong> 🩸</div>
+
+    <div class="donor-list" id="donor-list">
+        <h3><strong>Available Donors</strong></h3>
+        <div class="donor" onclick="showDetails('Saran J', '+91 7339453606', 'A+', '5 Donations')">
+            <img src="../assets/images/saran.jpg" alt="Saran" onclick="viewPhoto('../assets/images/saran.jpg')">
+            <span>Saran J (A+)</span>
+        </div>
+        <div class="donor" onclick="showDetails('Deepak Kamatchi ', '+91 9361626719', 'B+', '3 Donations')">
+            <img src="../assets/images/Deepak.jpg" alt="Deepak" onclick="viewPhoto('../assets/images/Deepak.jpg')">
+            <span>Deepak Kamatchi (B+)</span>
+        </div>
+    </div>
+
+    <div class="details-box" id="details-box">
+        <h3><strong>Donor Details</strong></h3>
+        <p><strong>Name:</strong> <span id="donor-name"></span></p>
+        <p><strong>Contact:</strong> <span id="donor-contact"></span></p>
+        <p><strong>Blood Group:</strong> <span id="donor-blood"></span></p>
+        <p><strong>Donations:</strong> <span id="donor-donations"></span></p>
+        <a id="whatsapp-call" class="call-button" href="#" target="_blank">📞 Call via WhatsApp</a>
+    </div>
+
+    <script>
+        function showDetails(name, contact, blood, donations) {
+            document.getElementById("donor-name").textContent = name;
+            document.getElementById("donor-contact").textContent = contact;
+            document.getElementById("donor-blood").textContent = blood;
+            document.getElementById("donor-donations").textContent = donations;
+            document.getElementById("details-box").style.display = "block";
+            document.getElementById("whatsapp-call").href = "https://wa.me/" + contact.replace(/\D/g, '');
+        }
+    </script>
+</body>
+</html>

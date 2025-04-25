@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            overflow: hidden;
+        }
+        .wrapper {
+            display: flex;
+            gap: 20px;
+        }
+        .confirmation-box, .tracking-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            width: 320px;
+        }
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #28a745;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: pop 0.6s ease-in-out;
+        }
+        .checkmark::after {
+            content: '✔';
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+        }
+        @keyframes pop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        h2, p {
+            color: white;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            text-align: center;
+        }
+        .pay-now {
+            background: linear-gradient(45deg, #ff512f, #dd2476);
+        }
+        .pay-now:hover {
+            background: linear-gradient(45deg, #dd2476, #ff512f);
+            transform: scale(1.05);
+        }
+        .after-ride {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+        }
+        .after-ride:hover {
+            background: linear-gradient(45deg, #0056b3, #007bff);
+            transform: scale(1.05);
+        }
+
+        /* Live Tracking Popup */
+        .tracking-box {
+            display: none;
+            width: 350px;
+            height: 450px;
+            text-align: center;
+            position: relative;
+        }
+        .tracking-box h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+        #map {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .close-btn {
+            background: red;
+            color: white;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Payment Confirmation Box -->
+        <div class="confirmation-box">
+            <div class="checkmark"></div>
+            <h2>Booking Confirmed!</h2>
+            <p>Your ride has been successfully booked. Choose your preferred payment option.</p>
+            <button class="btn pay-now" onclick="redirectToPayment()">Pay Now</button>
+            <button class="btn after-ride" onclick="redirectToPayment()">Pay After Ride</button>
+        </div>
+
+        <!-- Live Tracking Popup -->
+        <div id="trackingPopup" class="tracking-box">
+            <button class="close-btn" onclick="closeTracking()">X</button>
+            <h3>Live Ride Tracking</h3>
+            <p>Track your ride in real-time</p>
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script>
+        function redirectToPayment() {
+            window.location.href = "payment.html";
+        }
+
+        // Show the live tracking popup
+        setTimeout(() => {
+            document.getElementById("trackingPopup").style.display = "block";
+            loadMap();
+        }, 1000);
+
+        // Close the tracking popup
+        function closeTracking() {
+            document.getElementById("trackingPopup").style.display = "none";
+        }
+
+        // Load Google Maps API (Replace YOUR_API_KEY with your actual API key)
+        function loadMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 37.7749, lng: -122.4194 }, // Default to San Francisco (Change as needed)
+                zoom: 14
+            });
+
+            // Example Driver Marker
+            new google.maps.Marker({
+                position: { lat: 37.7749, lng: -122.4194 },
+                map: map,
+                title: "Your Driver"
+            });
+        }
+    </script>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=loadMap" async defer></script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthcare Web App</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    body {
+      background: url('assets/images/background-home.jpg') no-repeat center center fixed;
+      background-size: cover;
+      text-align: center;
+    }
+    header {
+      text-align: center;
+      padding: 20px 0;
+      position: relative;
+    }
+    #welcome-btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease-in-out;
+    }
+    #welcome-btn:hover {
+      transform: scale(1.05);
+    }
+    #chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 250px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+    #chatbot:hover {
+      transform: scale(1.05);
+    }
+    #chatbot img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    #menu {
+      display: none;
+      position: absolute;
+      right: 20px;
+      top: 50px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 200px;
+    }
+    #menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #menu ul li {
+      margin: 10px 0;
+    }
+    #menu ul li a {
+      display: block;
+      padding: 12px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease-in-out;
+    }
+    #menu ul li a:hover {
+      transform: scale(1.05);
+    }
+    #menu-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="healthmate.html" id="welcome-btn">Welcome to Healthcare Web App</a>
+    <button id="menu-btn">☰ Menu</button>
+    <nav id="menu">
+      <ul>
+        <li><a href="pages/profile.html">Profile</a></li>
+        <li><a href="pages/emergency.html">Emergency</a></li>
+        <li><a href="pages/pharma_store.html">Pharma E-Store</a></li>
+        <li><a href="pages/health_connect.html">Health Connect</a></li>
+        <li><a href="pages/fitness.html">Fitness</a></li>
+        <li><a href="pages/login.html">Login</a></li>
+        <li><a href="pages/register.html">Register</a></li>
+        <li><a href="pages/FamilyHealthManagement.html">Family Health Management</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Chatbot -->
+  <div id="chatbot" onclick="openChatbot()">
+    <img src="assets/images/chatbot-icon.png" alt="Chatbot Icon" id="chatbot-icon">
+    <div id="chatbot-box">
+      <p>How can I assist you?</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("menu-btn").addEventListener("click", function() {
+      var menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    });
+
+    function openChatbot() {
+      window.location.href = 'pages/chatbot.html';
+    }
+  </script>
+</body>
+</html>

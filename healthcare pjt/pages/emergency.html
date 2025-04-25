@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Services</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <style>
+        body {
+            background: url('../assets/images/hospital_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .header-box, .menu-box, .ambulance-box {
+            width: 50%;
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, rgba(17, 117, 252, 0.8), rgba(37, 203, 252, 0.8));
+            text-align: center;
+            font-weight: bold;
+            color: #fff;
+        }
+        .menu-btn, .btn {
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.2), rgba(0, 150, 0, 0.4));
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .menu-btn:hover, .btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.5), rgba(0, 150, 0, 0.6));
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        /* Return Home Button */
+        .return-home {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #ff4500;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .return-home:hover {
+            transform: scale(1.05);
+            background: #d63f00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        🚨 Emergency Services 🚨
+    </div>
+
+    <div class="menu-box">
+        <button class="menu-btn" onclick="location.href='blooddonar.html'">🩸 Blood Donors</button>
+        <button class="menu-btn" onclick="location.href='hospital.html'">🏥 Nearby Hospitals</button>
+    </div>
+
+    <div class="ambulance-box">
+        <h2>🚑 Ambulance Booking</h2>
+        <label for="booking-type">Booking Type:</label>
+        <select id="booking-type">
+            <option value="immediate">Immediate Booking</option>
+            <option value="scheduled">Scheduled Booking</option>
+        </select>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date">
+
+        <label for="time">Time:</label>
+        <input type="time" id="time">
+
+        <button class="btn" onclick="redirectToDriver()">🚑 Book Now</button>
+    </div>
+
+    <!-- Return to Home Button -->
+    <button class="return-home" onclick="goHome()">🏠 Return to Home</button>
+
+    <script>
+        function redirectToDriver() {
+            window.location.href = "driver.html";
+        }
+
+        function goHome() {
+            window.location.href = "../index.html"; // Redirect to index.html (outside the folder)
+        }
+    </script>
+</body>
+</html>

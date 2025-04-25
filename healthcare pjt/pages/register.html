@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body {
+            background: url('../assets/images/register.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-box {
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 180, 255, 0.3));
+            border-radius: 15px;
+            width: 320px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            color: white;
+        }
+        input, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+        }
+        input {
+            background: rgba(250, 248, 248, 0.959);
+            color: black;
+        }
+        button {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        p a {
+            color: #e92d07;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-box">
+        <h2>Register</h2>
+        <input type="text" id="fullname" placeholder="Full Name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <button onclick="register()">Register</button>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <script>
+        function register() {
+            let fullname = document.getElementById("fullname").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            if (localStorage.getItem(email)) {
+                alert("Account already exists! Please log in.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Save user details in localStorage
+            localStorage.setItem(email, JSON.stringify({ fullname, email, password }));
+            alert("Registration successful! Please log in.");
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
